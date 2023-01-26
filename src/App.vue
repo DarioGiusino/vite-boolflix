@@ -72,14 +72,27 @@ export default {
   <ul>
     <h1>----------------FILM---------------</h1>
     <li v-for="movie in moviesList" :key="movie.id">
+      <!-- banner image -->
       <img :src="`${imgUri}${movie.bannerUrl}`" alt="">
+
+      <!-- title -->
       {{ movie.title }},
+
+      <!-- original title -->
       {{ movie.originalTitle }},
+
+      <!-- language -->
       <span>lang: {{ movie.language }}</span>
+
+      <!-- if it or en, language flag -->
       <figure v-if="movie.language == 'it' || movie.language == 'en'">
         <img :src="renderFlag(movie.language)" alt="">,
       </figure>
+
+      <!-- desc -->
       <p>{{ movie.desc || 'No description' }}</p>,
+
+      <!-- rating -->
       {{ movie.rating }}
     </li>
     <br>
@@ -87,14 +100,27 @@ export default {
     <br>
     <h1>----------------SERIES---------------</h1>
     <li v-for="show in showsList" :key="show.id">
+      <!-- banner image -->
       <img :src="`${imgUri}${show.bannerUrl}`" alt="">
+
+      <!-- title -->
       {{ show.title }},
+
+      <!-- original title -->
       {{ show.originalTitle }},
+
+      <!-- language -->
       <span>lang: {{ show.language }}</span>
+
+      <!-- if it or en, language flag -->
       <figure v-if="show.language == 'it' || show.language == 'en'">
         <img :src="renderFlag(show.language)" alt="">,
       </figure>
+
+      <!-- desc -->
       <p>{{ show.desc || 'No description' }}</p>,
+
+      <!-- rating -->
       {{ show.rating }}
     </li>
   </ul>
