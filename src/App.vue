@@ -15,7 +15,13 @@ export default {
       if (!this.searchWord) return
       axios.get(`${apiUri}/search/movie?api_key=${apiKey}&query=${this.searchWord}`)
         .then(res => {
-          this.moviesList = res.data.results;
+          const movies = res.data.results;
+          const filteredMovies = movies.map((movie) => {
+            const { title, original_title, original_language, overview, vote_average } = movie
+            return { title, originalTitle: original_title, language: original_language, desc: overview, rating: vote_average }
+          })
+
+          this.moviesList = filteredMovies
         })
         .catch(err => { console.error(err) })
 
@@ -33,7 +39,8 @@ export default {
 
   <!-- # Movies list -->
   <ul>
-    <li v-for="movie in moviesList" :key="movie.id">{{ movie.title }}</li>
+    <li v-for="movie in moviesList" :key="movie.id">{{ movie.title }}, {{ movie.originalTitle }}, {{ movie.language }},
+      {{ movie.desc }}, {{ movie.rating }}</li>
   </ul>
 </template>
 
