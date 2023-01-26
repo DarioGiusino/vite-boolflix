@@ -6,24 +6,48 @@ export default {
   data() {
     return {
       searchWord: '',
-      moviesList: []
+      moviesList: [],
+      showsList: []
     }
   },
   methods: {
     // get movies by name from the API
     fetchMovies() {
+      // verify if input is not valid
       if (!this.searchWord) return
+
+      //get movies from api with selected keys
       axios.get(`${apiUri}/search/movie?api_key=${apiKey}&query=${this.searchWord}`)
         .then(res => {
+          //put the result in a variable
           const movies = res.data.results;
+
+          // filter the result by giving a new array with selected keys
           const filteredMovies = movies.map((movie) => {
             const { title, original_title, original_language, overview, vote_average } = movie
             return { title, originalTitle: original_title, language: original_language, desc: overview, rating: vote_average }
           })
 
+          //push the new array in data
           this.moviesList = filteredMovies
         })
-        .catch(err => { console.error(err) })
+        .catch(err => { console.error(err) });
+
+      //get shows from api with selected keys
+      axios.get(`${apiUri}/search/tv?api_key=${apiKey}&query=${this.searchWord}`)
+        .then(res => {
+          //put the result in a variable
+          const shows = res.data.results;
+
+          // filter the result by giving a new array with selected keys
+          const filteredShows = shows.map((show) => {
+            const { name, original_name, original_language, overview, vote_average } = show
+            return { title: name, originalTitle: original_name, language: original_language, desc: overview, rating: vote_average }
+          })
+
+          //push the new array in data
+          this.showsList = filteredShows
+        })
     },
 
     renderFlag(lang) {
@@ -43,6 +67,7 @@ export default {
 
   <!-- # Movies list -->
   <ul>
+    <h1>----------------FILM---------------</h1>
     <li v-for="movie in moviesList" :key="movie.id">
       {{ movie.title }},
       {{ movie.originalTitle }},
@@ -52,6 +77,20 @@ export default {
       </figure>
       <p>{{ movie.desc || 'No description' }}</p>,
       {{ movie.rating }}
+    </li>
+    <br>
+    <hr>
+    <br>
+    <h1>----------------SERIES---------------</h1>
+    <li v-for="show in showsList" :key="show.id">
+      {{ show.title }},
+      {{ show.originalTitle }},
+      <span>lang: {{ show.language }}</span>
+      <figure v-if="show.language == 'it' || show.language == 'en'">
+        <img :src="renderFlag(show.language)" alt="">,
+      </figure>
+      <p>{{ show.desc || 'No description' }}</p>,
+      {{ show.rating }}
     </li>
   </ul>
 </template>
