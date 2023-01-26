@@ -1,9 +1,24 @@
 <script>
+import axios from 'axios';
+import { apiUri, apiKey } from './data'
 export default {
   name: 'Boolflix',
   data() {
     return {
-      searchWord: ''
+      searchWord: '',
+      moviesList: []
+    }
+  },
+  methods: {
+    // get movies by name from the API
+    fetchMovies() {
+      if (!this.searchWord) return
+      axios.get(`${apiUri}/search/movie?api_key=${apiKey}&query=${this.searchWord}`)
+        .then(res => {
+          this.moviesList = res.data.results;
+        })
+        .catch(err => { console.error(err) })
+
     }
   }
 }
@@ -11,10 +26,15 @@ export default {
 
 <template>
   <!-- # Search Bar -->
-  <form>
+  <form @submit.prevent="fetchMovies">
     <input type="text" placeholder="Cerca..." v-model.trim="searchWord">
-    <button type="button">Cerca</button>
+    <button>Cerca</button>
   </form>
+
+  <!-- # Movies list -->
+  <ul>
+    <li v-for="movie in moviesList" :key="movie.id">{{ movie.title }}</li>
+  </ul>
 </template>
 
 <style>
