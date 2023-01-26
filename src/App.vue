@@ -24,7 +24,11 @@ export default {
           this.moviesList = filteredMovies
         })
         .catch(err => { console.error(err) })
+    },
 
+    renderFlag(lang) {
+      const url = new URL(`./assets/img/flags/${lang}.png`, import.meta.url);
+      return url.href;
     }
   }
 }
@@ -39,8 +43,16 @@ export default {
 
   <!-- # Movies list -->
   <ul>
-    <li v-for="movie in moviesList" :key="movie.id">{{ movie.title }}, {{ movie.originalTitle }}, {{ movie.language }},
-      {{ movie.desc }}, {{ movie.rating }}</li>
+    <li v-for="movie in moviesList" :key="movie.id">
+      {{ movie.title }},
+      {{ movie.originalTitle }},
+      <span>lang: {{ movie.language }}</span>
+      <figure v-if="movie.language == 'it' || movie.language == 'en'">
+        <img :src="renderFlag(movie.language)" alt="">,
+      </figure>
+      <p>{{ movie.desc || 'No description' }}</p>,
+      {{ movie.rating }}
+    </li>
   </ul>
 </template>
 
