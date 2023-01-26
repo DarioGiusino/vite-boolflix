@@ -25,7 +25,11 @@ export default {
 
           // filter the result by giving a new array with selected keys
           const filteredMovies = movies.map((movie) => {
-            const { title, original_title, original_language, overview, vote_average, poster_path } = movie
+            let { title, original_title, original_language, overview, vote_average, poster_path } = movie;
+
+            vote_average = Math.ceil(vote_average / 2);
+            console.log(vote_average);
+
             return { title, originalTitle: original_title, language: original_language, desc: overview, rating: vote_average, bannerUrl: poster_path }
           })
 
