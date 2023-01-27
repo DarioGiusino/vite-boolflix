@@ -12,7 +12,9 @@ export default {
       imgUri
     }
   },
+
   components: { AppHeader },
+
   computed: {
     //build a query string for axios call as an object
     APIConfig() {
@@ -76,6 +78,7 @@ export default {
 </script>
 
 <template>
+  <!-- # header -->
   <app-header @search-programs="fetchPrograms" @writing-word="getSearchedWord"></app-header>
 
   <!-- # Movies&Shows list -->
