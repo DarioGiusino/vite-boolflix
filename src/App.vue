@@ -1,56 +1,59 @@
 <script>
 import axios from 'axios';
-import { apiUri, apiKey, imgUri } from './data'
+import { apiUri, apiKey, imgUri } from './data';
+import { store } from './data/store';
 export default {
   name: 'Boolflix',
   data() {
     return {
+      store,
       searchWord: '',
-      moviesList: [],
-      showsList: [],
       imgUri
     }
   },
-  methods: {
-    // get movies&shows by name from the API
-    fetchMovies() {
-      // verify if input is not valid
-      if (!this.searchWord) return
+  computed: {
+    APIConfig() {
+      return {
+        params: {
+          api_key: apiKey,
+          query: this.searchWord
+        }
+      }
+    }
+  },
 
-      //get movies from api with selected keys
-      axios.get(`${apiUri}/search/movie?api_key=${apiKey}&query=${this.searchWord}`)
+  methods: {
+    // get movies&shows by name calling API
+    fetchPrograms() {
+      // verify if input is not valid
+      if (!this.searchWord) {
+        store.moviesList = [];
+        return
+      }
+
+      this.callAPI('search/movie', 'moviesList');
+      this.callAPI('search/tv', 'showsList');
+    },
+
+    // call API by giving and endpoint and a variable where to store the data
+    callAPI(endpoint, collection) {
+      //get shows from api with selected keys
+      axios.get(`${apiUri}/${endpoint}`, this.APIConfig)
         .then(res => {
           //put the result in a variable
-          const movies = res.data.results;
+          const programs = res.data.results;
 
           // filter the result by giving a new array with selected keys
-          const filteredMovies = movies.map((movie) => {
-            let { title, original_title, original_language, overview, vote_average, poster_path } = movie;
+          const filteredPrograms = programs.map((program) => {
+            let { name, title, original_title, original_name, original_language, overview, vote_average, poster_path } = program;
 
             vote_average = Math.ceil(vote_average / 2);
 
-            return { title, originalTitle: original_title, language: original_language, desc: overview, rating: vote_average, bannerUrl: poster_path }
+            return { title: name || title, originalTitle: original_name || original_title, language: original_language, desc: overview, rating: vote_average, bannerUrl: poster_path }
           })
 
           //push the new array in data
-          this.moviesList = filteredMovies
-        })
-        .catch(err => { console.error(err) });
-
-      //get shows from api with selected keys
-      axios.get(`${apiUri}/search/tv?api_key=${apiKey}&query=${this.searchWord}`)
-        .then(res => {
-          //put the result in a variable
-          const shows = res.data.results;
-
-          // filter the result by giving a new array with selected keys
-          const filteredShows = shows.map((show) => {
-            const { name, original_name, original_language, overview, vote_average, poster_path } = show
-            return { title: name, originalTitle: original_name, language: original_language, desc: overview, rating: vote_average, bannerUrl: poster_path }
-          })
-
-          //push the new array in data
-          this.showsList = filteredShows
+          store[collection] = filteredPrograms
         })
         .catch(err => { console.error(err) });
     },
@@ -66,7 +69,7 @@ export default {
 
 <template>
   <!-- # Search Bar -->
-  <form @submit.prevent="fetchMovies">
+  <form @submit.prevent="fetchPrograms">
     <input type="text" placeholder="Cerca..." v-model.trim="searchWord">
     <button>Cerca</button>
   </form>
@@ -74,7 +77,7 @@ export default {
   <!-- # Movies&Shows list -->
   <ul>
     <h1>----------------FILM---------------</h1>
-    <li v-for="movie in moviesList" :key="movie.id">
+    <li v-for="movie in store.moviesList" :key="movie.id">
       <!-- banner image -->
       <img :src="`${imgUri}${movie.bannerUrl}`" alt="">
 
@@ -103,7 +106,7 @@ export default {
     <hr>
     <br>
     <h1>----------------SERIES---------------</h1>
-    <li v-for="show in showsList" :key="show.id">
+    <li v-for="show in store.showsList" :key="show.id">
       <!-- banner image -->
       <img :src="`${imgUri}${show.bannerUrl}`" alt="">
 
