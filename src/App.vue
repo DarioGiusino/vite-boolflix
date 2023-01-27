@@ -14,6 +14,7 @@ export default {
   },
   components: { AppHeader },
   computed: {
+    //build a query string for axios call as an object
     APIConfig() {
       return {
         params: {
@@ -25,9 +26,11 @@ export default {
   },
 
   methods: {
+    //updating the searchWord in data with the one from the searchBar
     getSearchedWord(word) {
       this.searchWord = word
     },
+
     // get movies&shows by name calling API
     fetchPrograms() {
       // verify if input is not valid
