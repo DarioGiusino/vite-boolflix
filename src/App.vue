@@ -25,6 +25,9 @@ export default {
   },
 
   methods: {
+    getSearchedWord(word) {
+      this.searchWord = word
+    },
     // get movies&shows by name calling API
     fetchPrograms() {
       // verify if input is not valid
@@ -70,7 +73,7 @@ export default {
 </script>
 
 <template>
-  <app-header></app-header>
+  <app-header @search-programs="fetchPrograms" @writing-word="getSearchedWord"></app-header>
 
   <!-- # Movies&Shows list -->
   <ul>

@@ -2,7 +2,8 @@
 import SearchBar from './SearchBar.vue';
 export default {
     name: 'App Header',
-    components: { SearchBar }
+    components: { SearchBar },
+    emits: ['search-programs', 'writing-word']
 }
 </script>
 
@@ -10,7 +11,8 @@ export default {
     <header>
         <div class="container d-flex justify-content-between align-items-center">
             <h1 class="text-uppercase">boolflix</h1>
-            <search-bar placeholder="Cerca film o serie TV"></search-bar>
+            <search-bar placeholder="Cerca film o serie TV" @form-submit="$emit('search-programs')"
+                @writing="$emit('writing-word', $event)"></search-bar>
         </div>
     </header>
 </template>
