@@ -71,11 +71,6 @@ export default {
 
 <template>
   <app-header></app-header>
-  <!-- # Search Bar -->
-  <form @submit.prevent="fetchPrograms">
-    <input type="text" placeholder="Cerca..." v-model.trim="searchWord">
-    <button>Cerca</button>
-  </form>
 
   <!-- # Movies&Shows list -->
   <ul>

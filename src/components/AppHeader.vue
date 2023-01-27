@@ -8,9 +8,9 @@ export default {
 
 <template>
     <header>
-        <div class="container d-flex justify-content-between">
+        <div class="container d-flex justify-content-between align-items-center">
             <h1 class="text-uppercase">boolflix</h1>
-            <search-bar></search-bar>
+            <search-bar placeholder="Cerca film o serie TV"></search-bar>
         </div>
     </header>
 </template>
