@@ -18,7 +18,7 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@use '../assets/scss/style.scss' as *;
+@use '../assets/scss/partials/variables.scss' as *;
 
 header {
     background-color: $bg-black;

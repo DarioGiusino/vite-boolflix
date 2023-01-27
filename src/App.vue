@@ -136,10 +136,6 @@ export default {
   </ul>
 </template>
 
-<style>
-body {
-  background-color: #0d1117;
-  color: #f0f6fc;
-  min-height: 100vh;
-}
+<style lang="scss">
+@use './assets/scss/style.scss'
 </style>
