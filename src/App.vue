@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { apiUri, apiKey, imgUri } from './data';
 import { store } from './data/store';
+import AppHeader from './components/AppHeader.vue';
 export default {
   name: 'Boolflix',
   data() {
@@ -11,6 +12,7 @@ export default {
       imgUri
     }
   },
+  components: { AppHeader },
   computed: {
     APIConfig() {
       return {
@@ -68,6 +70,7 @@ export default {
 </script>
 
 <template>
+  <app-header></app-header>
   <!-- # Search Bar -->
   <form @submit.prevent="fetchPrograms">
     <input type="text" placeholder="Cerca..." v-model.trim="searchWord">
@@ -79,7 +82,8 @@ export default {
     <h1>----------------FILM---------------</h1>
     <li v-for="movie in store.moviesList" :key="movie.id">
       <!-- banner image -->
-      <img :src="`${imgUri}${movie.bannerUrl}`" alt="">
+      <span v-if="!movie.bannerUrl">-No banner-</span>
+      <img v-else :src="`${imgUri}${movie.bannerUrl}`" alt="">
 
       <!-- title -->
       {{ movie.title }},
@@ -108,7 +112,8 @@ export default {
     <h1>----------------SERIES---------------</h1>
     <li v-for="show in store.showsList" :key="show.id">
       <!-- banner image -->
-      <img :src="`${imgUri}${show.bannerUrl}`" alt="">
+      <span v-if="!show.bannerUrl">-No banner-</span>
+      <img v-else :src="`${imgUri}${show.bannerUrl}`" alt="">
 
       <!-- title -->
       {{ show.title }},
@@ -138,6 +143,5 @@ body {
   background-color: #0d1117;
   color: #f0f6fc;
   min-height: 100vh;
-  padding: 20px;
 }
 </style>
