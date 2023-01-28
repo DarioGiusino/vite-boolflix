@@ -14,7 +14,7 @@ export default {
     methods: {
         //build the url for the flag image
         renderFlag(lang) {
-            const url = new URL(`./assets/img/flags/${lang}.png`, import.meta.url);
+            const url = new URL(`../assets/img/flags/${lang}.png`, import.meta.url);
             return url.href;
         },
 
@@ -75,7 +75,12 @@ export default {
         <div class="program-info">
             <h1 class="mb-0">{{ title }}</h1>
             <em class="d-block mb-2">-{{ originalTitle }}-</em>
-            <p>lingua: {{ language }}</p>
+
+            <figure v-if="language == 'it' || language == 'en'">
+                <img :src="renderFlag(language)" :alt="language">
+            </figure>
+            <p v-else>lingua: {{ language }}</p>
+
             <p>voto: {{ rating }}</p>
             <p><strong>Descrizione: </strong>{{ desc || "Nessuna descrizione trovata." }}</p>
         </div>
@@ -119,6 +124,13 @@ export default {
 .program-card:hover .program-info {
     opacity: 1;
     z-index: 1;
+}
+
+.program-info figure {
+    margin: 0 auto;
+    margin-bottom: 1.25rem;
+    width: 30px;
+    height: 20px;
 }
 
 h1 {
