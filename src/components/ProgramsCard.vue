@@ -23,65 +23,28 @@ export default {
 </script>
 
 <template>
+    <!-- # programs card -->
     <div class="program-card mb-4">
-
-        <!-- <ul>
-            <h1>----------------FILM---------------</h1>
-            <li v-for="movie in store.moviesList" :key="movie.id">
-                <span v-if="!movie.bannerUrl">-No banner-</span>
-                <img v-else :src="`${imgUri}${movie.bannerUrl}`" alt="">
-
-                {{ movie.title }},
-
-                {{ movie.originalTitle }},
-
-                <span>lang: </span>
-                <figure v-if="movie.language == 'it' || movie.language == 'en'">
-                    <img :src="renderFlag(movie.language)" alt="">,
-                </figure>
-
-                <span v-else>{{ movie.language }}</span>
-
-                <p>{{ movie.desc || 'No description' }}</p>,
-
-                {{ movie.rating }}
-            </li>
-            <br>
-            <hr>
-            <br>
-            <h1>----------------SERIES---------------</h1>
-            <li v-for="show in store.showsList" :key="show.id">
-                <span v-if="!show.bannerUrl">-No banner-</span>
-                <img v-else :src="`${imgUri}${show.bannerUrl}`" alt="">
-
-                {{ show.title }},
-
-                {{ show.originalTitle }},
-
-                <span>lang: {{ show.language }}</span>
-
-                <figure v-if="show.language == 'it' || show.language == 'en'">
-                    <img :src="renderFlag(show.language)" alt="">,
-                </figure>
-
-                <p>{{ show.desc || 'No description' }}</p>,
-
-                {{ show.rating }}
-            </li>
-        </ul> -->
+        <!-- ? banner image, if not existent show a default image -->
         <img v-if="bannerUrl" :src="`${bannerUri}${bannerUrl}`" :alt="title">
         <img v-else src="../assets/img/fallback_image.jpg" :alt="title">
 
+        <!-- ? :hover show program info -->
         <div class="program-info">
+            <!-- title & original title -->
             <h1 class="mb-0">{{ title }}</h1>
             <em class="d-block mb-2">-{{ originalTitle }}-</em>
 
+            <!-- show language flags as image or the language as text -->
             <figure v-if="language == 'it' || language == 'en'">
                 <img :src="renderFlag(language)" :alt="language">
             </figure>
             <p v-else>lingua: {{ language }}</p>
 
-            <p>voto: {{ rating }}</p>
+            <!-- program rating -->
+            <p>voto: {{ rating }}/5</p>
+
+            <!-- program description -->
             <p><strong>Descrizione: </strong>{{ desc || "Nessuna descrizione trovata." }}</p>
         </div>
     </div>

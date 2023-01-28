@@ -10,7 +10,10 @@ export default {
 <template>
     <header>
         <div class="container d-flex justify-content-between align-items-center">
+            <!-- header title -->
             <h1 class="text-uppercase mb-0">boolflix</h1>
+
+            <!-- searchbar -->
             <search-bar placeholder="Cerca film o serie TV" @form-submit="$emit('search-programs')"
                 @writing="$emit('writing-word', $event)"></search-bar>
         </div>

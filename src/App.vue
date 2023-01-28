@@ -80,7 +80,6 @@ export default {
   <!-- # Movies&Shows list -->
   <app-main></app-main>
 
-
 </template>
 
 <style lang="scss">
