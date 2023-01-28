@@ -18,6 +18,14 @@ export default {
             return url.href;
         },
 
+        changeRatingToStars(vote) {
+            let starVote = ``
+            for (let i = 0; i < 5; i++) {
+                if (i < vote) starVote += `&#9733;`
+                else starVote += `&#9734;`
+            }
+            return starVote
+        }
     }
 }
 </script>
@@ -42,7 +50,7 @@ export default {
             <p v-else>lingua: {{ language }}</p>
 
             <!-- program rating -->
-            <p>voto: {{ rating }}/5</p>
+            <p>voto: <span v-html="changeRatingToStars(rating)"></span></p>
 
             <!-- program description -->
             <p><strong>Descrizione: </strong>{{ desc || "Nessuna descrizione trovata." }}</p>
