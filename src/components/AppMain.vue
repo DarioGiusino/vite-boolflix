@@ -17,15 +17,20 @@ export default {
 
 <template>
     <main class="container p-5">
-        <h1 class="text-center">Films:</h1>
-        <div class="d-flex flex-wrap">
-            <programs-card v-for="movie in store.moviesList" v-bind="movie" :bannerUri="imgUri"
-                bannerDefault="../assets/img/fallback_image.jpg"></programs-card>
+        <div v-if="!store.moviesList.length && !store.showsList.length">
+            <h1>Cerca un programma dalla barra in alto...</h1>
         </div>
 
-        <h1 class="text-center">Series:</h1>
-        <div class="d-flex flex-wrap">
-            <programs-card v-for="show in store.showsList" v-bind="show"></programs-card>
+        <div v-else>
+            <h1 class="text-center">Films:</h1>
+            <div class="d-flex flex-wrap">
+                <programs-card v-for="movie in store.moviesList" v-bind="movie" :bannerUri="imgUri"></programs-card>
+            </div>
+
+            <h1 class="text-center mt-5">Series:</h1>
+            <div class="d-flex flex-wrap">
+                <programs-card v-for="show in store.showsList" v-bind="show"></programs-card>
+            </div>
         </div>
     </main>
 </template>

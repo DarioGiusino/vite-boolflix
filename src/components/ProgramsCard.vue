@@ -9,7 +9,6 @@ export default {
         desc: String,
         bannerUrl: String,
         bannerUri: String,
-        bannerDefault: String
     },
 
     methods: {
