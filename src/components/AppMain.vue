@@ -32,7 +32,7 @@ export default {
             <!-- ? series cards -->
             <h1 class="text-center mt-5">Series:</h1>
             <div class="d-flex flex-wrap">
-                <programs-card v-for="show in store.showsList" v-bind="show"></programs-card>
+                <programs-card v-for="show in store.showsList" v-bind="show" :bannerUri="imgUri"></programs-card>
             </div>
         </div>
     </main>
